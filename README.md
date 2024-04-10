@@ -32,10 +32,10 @@ This repository contains a set of scripts to export QuPath annotations as GeoJSO
 
 #### For single GeoJSON file
 
-1. Run `qupath_roi_splitter.py` with the `--qupath_roi` argument pointing to the GeoJSON file you want to process.
+1. Run `qupath_roi_splitter.py` with the `--qupath_roi` argument pointing to the GeoJSON file you want to process. `--fill` is an optional argument to fill the ROI polygons. `--all` is an optional argument to export all features of GeoJSON (ignores if classification is present).
 
 ```bash
-python qupath_roi_splitter.py --qupath_roi path/to/your/geojson_file.geojson
+python qupath_roi_splitter.py --qupath_roi path/to/your/geojson_file.geojson --fill
 ```
 
 #### For multiple GeoJSON files in a folder
@@ -43,7 +43,7 @@ python qupath_roi_splitter.py --qupath_roi path/to/your/geojson_file.geojson
 1. Run `qupath_roi_splitter_folder.py` with the `qupath_roi_folder` argument pointing to the folder containing the GeoJSON files you want to process.
 
 ```bash
-python qupath_roi_splitter_folder.py path/to/your/geojson_folder
+python qupath_roi_splitter_folder.py path/to/your/geojson_folder --fill
 ```
 
 The script will create a tab-separated text file for each cell type (classification) in the same folder as the GeoJSON files. The text files will be named as follows: `[TMA_name]_[cell_type].txt`.
