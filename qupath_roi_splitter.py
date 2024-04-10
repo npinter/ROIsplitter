@@ -62,7 +62,10 @@ def split_qupath_roi(in_roi):
 		coords_arr_xy = np.delete(coords_arr_xy, 2, axis=1)
 
 		# to pandas and rename columns to x and y
-		coords_df = pd.DataFrame(coords_arr_xy, columns=['x', 'y'])
+		coords_df = pd.DataFrame(coords_arr_xy, columns=['y', 'x'])
+
+		# reorder columns
+		coords_df = coords_df[['x', 'y']]
 
 		# drop duplicates
 		coords_df = coords_df.drop_duplicates(

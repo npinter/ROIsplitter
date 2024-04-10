@@ -66,8 +66,11 @@ def split_qupath_roi_folder(roi_folder):
             # remove last column
             coords_arr_xy = np.delete(coords_arr_xy, 2, axis=1)
 
-            # to pandas
-            coords_df = pd.DataFrame(coords_arr_xy, columns={"x", "y"})
+            # to pandas and rename columns to x and y
+            coords_df = pd.DataFrame(coords_arr_xy, columns=['y', 'x'])
+
+            # reorder columns
+            coords_df = coords_df[['x', 'y']]
 
             # drop duplicates
             coords_df = coords_df.drop_duplicates(
