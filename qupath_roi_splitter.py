@@ -5,9 +5,12 @@ import pandas as pd
 import numpy as np
 
 
-def draw_poly(input_df, input_img, col=(0, 0, 0)):
+def draw_poly(input_df, input_img, col=(0, 0, 0), fill=False):
 	s = np.array(input_df)
-	output_img = cv2.fillPoly(input_img, pts=np.int32([s]), color=col)
+	if fill:
+		output_img = cv2.fillPoly(input_img, pts=np.int32([s]), color=col)
+	else:
+		output_img = cv2.polylines(input_img, np.int32([s]), True, color=col, thickness=1)
 	return output_img
 
 
@@ -78,6 +81,7 @@ def split_qupath_roi(in_roi):
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser(description="Split ROI coordinates of QuPath TMA annotation by cell type (classfication)")
 	parser.add_argument("--qupath_roi", default=False, help="Input QuPath annotation (GeoJSON file)")
+	parser.add_argument("--fill", action="store_true", required=False, help="Fill pixels in ROIs")
 	parser.add_argument('--version', action='version', version='%(prog)s 0.1.0')
 	args = parser.parse_args()
 

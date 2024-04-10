@@ -7,9 +7,12 @@ import pandas as pd
 import argparse
 
 
-def draw_poly(input_df, input_img, col=(0, 0, 0)):
+def draw_poly(input_df, input_img, col=(0, 0, 0), fill=False):
     s = np.array(input_df)
-    output_img = cv2.fillPoly(input_img, pts=np.int32([s]), color=col)
+    if fill:
+        output_img = cv2.fillPoly(input_img, pts=np.int32([s]), color=col)
+    else:
+        output_img = cv2.polylines(input_img, np.int32([s]), True, color=col, thickness=1)
     return output_img
 
 
@@ -35,27 +38,27 @@ def split_qupath_roi_folder(roi_folder):
                 if roi["properties"]["classification"]["name"] == cell_type:
                     if len(roi["geometry"]["coordinates"]) == 1:
                         # Polygon w/o holes
-                        img = draw_poly(roi["geometry"]["coordinates"][0], img)
+                        img = draw_poly(roi["geometry"]["coordinates"][0], img, fill=args.fill)
                     else:
                         first_roi = True
                         for sub_roi in roi["geometry"]["coordinates"]:
                             # Polygon with holes
                             if not isinstance(sub_roi[0][0], list):
                                 if first_roi:
-                                    img = draw_poly(sub_roi, img)
+                                    img = draw_poly(sub_roi, img, fill=args.fill)
                                     first_roi = False
                                 else:
                                     # holes in ROI
-                                    img = draw_poly(sub_roi, img, col=(255, 255, 255))
+                                    img = draw_poly(sub_roi, img, col=(255, 255, 255), fill=args.fill)
                             else:
                                 # MultiPolygon with holes
                                 for sub_coord in sub_roi:
                                     if first_roi:
-                                        img = draw_poly(sub_coord, img)
+                                        img = draw_poly(sub_coord, img, fill=args.fill)
                                         first_roi = False
                                     else:
                                         # holes in ROI
-                                        img = draw_poly(sub_coord, img, col=(255, 255, 255))
+                                        img = draw_poly(sub_coord, img, col=(255, 255, 255), fill=args.fill)
 
             # get all black pixel
             coords_arr = np.column_stack(np.where(img == (0, 0, 0)))
@@ -83,6 +86,7 @@ def split_qupath_roi_folder(roi_folder):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Split ROI coordinates of QuPath TMA annotation by cell type (classfication) [FOLDER]")
     parser.add_argument("qupath_roi_folder", default=False, help="Input QuPath annotation folder (GeoJSON files)")
+    parser.add_argument("--fill", action="store_true", required=False, help="Fill holes in ROI")
     parser.add_argument('--version', action='version', version='%(prog)s 0.1.0')
     args = parser.parse_args()
 
