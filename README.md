@@ -4,6 +4,8 @@
 
 This repository contains a set of scripts to export QuPath annotations as GeoJSON and split the exported ROI coordinates by cell type (classification) for further analysis.
 
+v0.2.0
+
 ## Scripts
 
 1. `ExAnnoClassifications.groovy`: A Groovy script for QuPath to extract cell detection-based annotations (classifications) from QuPath TMA projects and save them as GeoJSON files.
