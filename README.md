@@ -4,7 +4,7 @@
 
 This repository contains a set of scripts to export QuPath annotations as GeoJSON and split the exported ROI coordinates by cell type (classification) for further analysis.
 
-v0.2.0
+v0.2.1
 
 ## Scripts
 
