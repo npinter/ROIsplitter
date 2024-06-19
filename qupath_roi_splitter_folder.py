@@ -1,10 +1,11 @@
-import geojson
 from os import listdir
 from os.path import isfile, join
-import numpy as np
-import cv2
-import pandas as pd
 import argparse
+
+import cv2
+import geojson
+import numpy as np
+import pandas as pd
 
 
 def draw_poly(input_df, input_img, col=(0, 0, 0), fill=False):
