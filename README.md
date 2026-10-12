@@ -4,7 +4,7 @@
 
 This repository contains a set of scripts to export QuPath annotations as GeoJSON and split the exported ROI coordinates by cell type (classification) for further analysis.
 
-v0.3.2
+v0.3.3
 
 ## Scripts
 
@@ -34,7 +34,7 @@ v0.3.2
 
 #### For single GeoJSON file
 
-1. Run `qupath_roi_splitter.py` with the `--qupath_roi` argument pointing to the GeoJSON file you want to process. `--fill` is an optional argument to fill the ROI polygons. `--all` is an optional argument to export all features of GeoJSON (ignores if classification is present).
+Run `qupath_roi_splitter.py` with the `--qupath_roi` argument pointing to the GeoJSON file you want to process. `--fill` is an optional argument to fill the ROI polygons. `--all` is an optional argument to export all features of GeoJSON (ignores if classification is present). Add `--img` to create a PNG for each cell type with thicker ROI outlines, a grid, and labeled X/Y axes. The PNGs are cropped to the area containing the ROIs. Axis values remain the original QuPath pixel coordinates, with Y increasing downward. PNGs from the same input share the same crop and scale.
 
 ```bash
 python qupath_roi_splitter.py --qupath_roi path/to/your/geojson_file.geojson --fill
@@ -42,13 +42,13 @@ python qupath_roi_splitter.py --qupath_roi path/to/your/geojson_file.geojson --f
 
 #### For multiple GeoJSON files in a folder
 
-1. Run `qupath_roi_splitter_folder.py` with the `qupath_roi_folder` argument pointing to the folder containing the GeoJSON files you want to process.
+Run `qupath_roi_splitter_folder.py` with the `qupath_roi_folder` argument pointing to the folder containing the GeoJSON files you want to process. It supports the same `--fill`, `--all`, and `--img` options.
 
 ```bash
 python qupath_roi_splitter_folder.py path/to/your/geojson_folder --fill
 ```
 
-The script will create a tab-separated text file for each cell type (classification) in the same folder as the GeoJSON files. The text files will be named as follows: `[TMA_name]_[cell_type].txt`.
+The scripts create a tab-separated text file for each cell type (classification) in the current working directory, named `[TMA_name]_[cell_type].txt`. With `--img`, they also create `[TMA_name]_[cell_type].png` plots.
 
 ## License
 
