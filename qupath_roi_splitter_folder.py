@@ -6,7 +6,6 @@ import cv2
 import geojson
 import numpy as np
 import pandas as pd
-
 from roi_plot import filled_coordinates, plot_bounds, polygon_arrays, render_roi_image
 
 
